@@ -85,3 +85,10 @@
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-helper-scripts-reference.html (requires python2.7)
     - name: install aws cfn helper scripts
       shell: "/usr/bin/python2.7 /usr/lib/python2.7/dist-packages/easy_install.py --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz"
+
+    - name: update limits.conf
+      shell: >
+        "sed -i 
+        -e 's/soft[[:space:]]+nofile[[:space:]]+[[:digit:]]+$/soft nofile 1000000/g' 
+        -e 's/hard[[:space:]]+nofile[[:space:]]+[[:digit:]]+$/hard nofile 1000000/g' 
+        /etc/security/limits.conf"
